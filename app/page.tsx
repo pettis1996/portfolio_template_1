@@ -1,101 +1,206 @@
-import Image from "next/image";
+"use client"
+import { useState } from "react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Progress } from "@/components/ui/progress"
+import Image from "next/image"
+import { Github, Linkedin, Mail, ExternalLink } from "lucide-react"
 
-export default function Home() {
+export default function ModernSimplePortfolio() {
+  const [activeTab, setActiveTab] = useState("about")
+
+  console.log(activeTab)
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-gray-100 text-gray-800 p-8">
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[calc(100vh-4rem)]">
+          {/* Left Column - Profile */}
+          <div className="lg:col-span-1 bg-gray-50 p-8 border-r border-gray-200">
+            <div className="flex flex-col items-center space-y-6">
+              <Image
+                src="/placeholder.svg?height=200&width=200"
+                alt="Profile Picture"
+                width={200}
+                height={200}
+                className="rounded-full border-4 border-white shadow-lg"
+              />
+              <h1 className="text-3xl font-bold">Your Name</h1>
+              <p className="text-xl text-gray-600">Web Developer</p>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
+                  <Github size={24} />
+                </a>
+                <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
+                  <Linkedin size={24} />
+                </a>
+                <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
+                  <Mail size={24} />
+                </a>
+              </div>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">Download CV</Button>
+            </div>
+            <div className="mt-12">
+              <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+              <div className="space-y-4">
+                {[
+                  { name: "React", level: 90 },
+                  { name: "Node.js", level: 85 },
+                  { name: "TypeScript", level: 80 },
+                  { name: "UI/UX Design", level: 75 },
+                ].map((skill, index) => (
+                  <div key={index}>
+                    <div className="flex justify-between mb-1">
+                      <span>{skill.name}</span>
+                      <span>{skill.level}%</span>
+                    </div>
+                    <Progress value={skill.level} className="h-2" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          {/* Right Column - Tabs */}
+          <div className="lg:col-span-2 p-8">
+            <Tabs defaultValue="about" className="w-full" onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-5 bg-gray-100 rounded-xl p-1">
+                <TabsTrigger value="about" className="rounded-lg">
+                  About
+                </TabsTrigger>
+                <TabsTrigger value="experience" className="rounded-lg">
+                  Experience
+                </TabsTrigger>
+                <TabsTrigger value="education" className="rounded-lg">
+                  Education
+                </TabsTrigger>
+                <TabsTrigger value="projects" className="rounded-lg">
+                  Projects
+                </TabsTrigger>
+                <TabsTrigger value="contact" className="rounded-lg">
+                  Contact
+                </TabsTrigger>
+              </TabsList>
+              <div className="mt-8 h-[calc(100vh-20rem)] overflow-y-auto pr-4">
+                <TabsContent value="about">
+                  <h2 className="text-3xl font-bold mb-4">About Me</h2>
+                  <p className="text-lg leading-relaxed mb-6">
+                    I`m a passionate web developer with a keen eye for design and a love for creating seamless user
+                    experiences. With expertise in modern web technologies, I bring ideas to life through clean,
+                    efficient code and intuitive interfaces.
+                  </p>
+                  <p className="text-lg leading-relaxed">
+                    When I`m not coding, you can find me exploring new technologies, contributing to open-source
+                    projects, or sharing my knowledge through tech blogs and community meetups. I believe in continuous
+                    learning and staying up-to-date with the latest industry trends to deliver cutting-edge solutions.
+                  </p>
+                </TabsContent>
+                <TabsContent value="experience">
+                  <h2 className="text-3xl font-bold mb-6">Work Experience</h2>
+                  <div className="space-y-8">
+                    {[
+                      {
+                        title: "Senior Web Developer",
+                        company: "Tech Innovators Inc.",
+                        period: "2020 - Present",
+                        description:
+                          "Lead development of complex web applications, mentor junior developers, and implement best practices.",
+                      },
+                      {
+                        title: "Frontend Developer",
+                        company: "Creative Solutions Ltd.",
+                        period: "2018 - 2020",
+                        description: "Developed responsive and accessible user interfaces for various client projects.",
+                      },
+                      {
+                        title: "Junior Developer",
+                        company: "StartUp Ventures",
+                        period: "2016 - 2018",
+                        description:
+                          "Assisted in the development of web applications and gained experience in full-stack development.",
+                      },
+                    ].map((job, index) => (
+                      <Card key={index} className="border-l-4 border-blue-500">
+                        <CardContent className="p-6">
+                          <h3 className="text-xl font-semibold">{job.title}</h3>
+                          <p className="text-gray-600">{job.company}</p>
+                          <p className="text-sm text-gray-500 mt-1">{job.period}</p>
+                          <p className="mt-2">{job.description}</p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+                <TabsContent value="education">
+                  <h2 className="text-3xl font-bold mb-6">Education</h2>
+                  <div className="space-y-6">
+                    <Card>
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-semibold">Master of Computer Science</h3>
+                        <p className="text-gray-600">University of Technology</p>
+                        <p className="text-sm text-gray-500">Graduated: 2016</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-semibold">Bachelor of Software Engineering</h3>
+                        <p className="text-gray-600">State University</p>
+                        <p className="text-sm text-gray-500">Graduated: 2014</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </TabsContent>
+                <TabsContent value="projects">
+                  <h2 className="text-3xl font-bold mb-6">Projects</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { name: "E-commerce Platform", tech: "React, Node.js, MongoDB" },
+                      { name: "Task Management App", tech: "Vue.js, Firebase" },
+                      { name: "Social Media Dashboard", tech: "React, D3.js, Express" },
+                      { name: "Fitness Tracker", tech: "React Native, GraphQL" },
+                    ].map((project, index) => (
+                      <Card key={index}>
+                        <CardContent className="p-6">
+                          <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
+                          <p className="text-sm text-gray-600 mb-4">{project.tech}</p>
+                          <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                            View Project <ExternalLink size={16} className="ml-2" />
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+                <TabsContent value="contact">
+                  <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
+                  <form className="space-y-4">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Your Email"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <textarea
+                      placeholder="Your Message"
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    ></textarea>
+                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      Send Message
+                    </Button>
+                  </form>
+                </TabsContent>
+              </div>
+            </Tabs>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
-  );
+  )
 }
+
